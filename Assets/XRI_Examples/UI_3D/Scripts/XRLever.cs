@@ -200,7 +200,7 @@ namespace UnityEngine.XR.Content.Interaction
         void SetHandleAngle(float angle)
         {
             if (m_Handle != null)
-                m_Handle.localRotation = Quaternion.Euler(angle, 0.0f, 0.0f);
+                m_Handle.localRotation = Quaternion.Euler(angle, 90.0f, 0.0f);
         }
 
         void OnDrawGizmosSelected()
