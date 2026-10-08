@@ -7,6 +7,9 @@ using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class VRRotatingKnob : XRBaseInteractable
 {
+    [Header("Action")]
+    [SerializeField] private CurtainController curtain;
+
     [Header("Rotation")]
     [SerializeField] private float targetAngle = 1080f;
     [SerializeField] private bool reverseDirection = false;
@@ -19,6 +22,8 @@ public class VRRotatingKnob : XRBaseInteractable
 
     [Header("Indicateur")]
     [SerializeField] private Image progressFill;
+    [SerializeField] private Transform indicator;
+    [SerializeField] private Vector3 indicatorOffset = new Vector3(0f, 0.3f, 0f);
 
     [Header("Événements")]
     [SerializeField] private UnityEvent onLock;
@@ -29,6 +34,32 @@ public class VRRotatingKnob : XRBaseInteractable
     private float lastHandAngle;
     private bool locked;
     private bool targetReached;
+    private Quaternion indicatorRotation;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if (indicator != null)
+            indicatorRotation = indicator.rotation;
+    }
+
+    private void Update()
+    {
+        UpdateIndicator();
+    }
+
+    private void UpdateIndicator()
+    {
+        if (indicator == null)
+            return;
+        
+        Transform space = transform.parent;
+        Vector3 localTarget = transform.localPosition + indicatorOffset;
+
+        indicator.position = space != null ? space.TransformPoint(localTarget) : localTarget;
+        indicator.rotation = indicatorRotation;
+    }
 
     protected override void OnSelectEntered(SelectEnterEventArgs args)
     {
@@ -97,8 +128,21 @@ public class VRRotatingKnob : XRBaseInteractable
             progressFill.fillAmount = turned / targetAngle;
 
         bool reached = turned >= targetAngle;
-        if (reached && !targetReached) onTargetReached?.Invoke();
+        if (reached && !targetReached)
+            OnTargetReached();
         targetReached = reached;
+    }
+
+    private void OnTargetReached()
+    {
+        Debug.Log("Rouage tourné à fond");
+
+        if (curtain != null)
+            curtain.RaiseCurtain();
+        else
+            Debug.LogWarning("CurtainController non assigné au rouage");
+
+        onTargetReached?.Invoke();
     }
 
     public void Lock()
