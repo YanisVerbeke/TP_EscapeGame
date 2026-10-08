@@ -171,7 +171,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.28
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &13060672
 MonoBehaviour:
@@ -596,13 +596,16 @@ MonoBehaviour:
   progressFill: {fileID: 1793207045}
   indicator: {fileID: 1793207044}
   indicatorOffset: {x: 0, y: 0.5, z: 0}
+  onProgressChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onTargetReached:
+    m_PersistentCalls:
+      m_Calls: []
   onLock:
     m_PersistentCalls:
       m_Calls: []
   onUnlock:
-    m_PersistentCalls:
-      m_Calls: []
-  onTargetReached:
     m_PersistentCalls:
       m_Calls: []
 --- !u!64 &173147984
@@ -867,7 +870,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.28
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &290587470
 MonoBehaviour:
@@ -1156,13 +1159,16 @@ MonoBehaviour:
   progressFill: {fileID: 1111431308}
   indicator: {fileID: 1111431307}
   indicatorOffset: {x: 0, y: 0.5, z: 0}
+  onProgressChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onTargetReached:
+    m_PersistentCalls:
+      m_Calls: []
   onLock:
     m_PersistentCalls:
       m_Calls: []
   onUnlock:
-    m_PersistentCalls:
-      m_Calls: []
-  onTargetReached:
     m_PersistentCalls:
       m_Calls: []
 --- !u!64 &519653973
@@ -1281,13 +1287,16 @@ MonoBehaviour:
   progressFill: {fileID: 1685443900}
   indicator: {fileID: 1685443899}
   indicatorOffset: {x: 0, y: 0.5, z: 0}
+  onProgressChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onTargetReached:
+    m_PersistentCalls:
+      m_Calls: []
   onLock:
     m_PersistentCalls:
       m_Calls: []
   onUnlock:
-    m_PersistentCalls:
-      m_Calls: []
-  onTargetReached:
     m_PersistentCalls:
       m_Calls: []
 --- !u!64 &565884050
@@ -1421,7 +1430,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.28
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &624498290
 MonoBehaviour:
@@ -1845,7 +1854,7 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
-  m_FarAttachMode: 1
+  m_FarAttachMode: 2
   m_LimitLinearVelocity: 0
   m_LimitAngularVelocity: 0
   m_MaxLinearVelocityDelta: 10
@@ -1998,7 +2007,7 @@ MonoBehaviour:
   requiredTag: Throwable
   requiredWeight: 0
   ignoreHeldObjects: 1
-  stayActivated: 1
+  stayActivated: 0
   plateVisual: {fileID: 705549751}
   pressDistance: 0.02
   pressSpeed: 10
@@ -2074,7 +2083,7 @@ MonoBehaviour:
   requiredTag: Throwable
   requiredWeight: 0
   ignoreHeldObjects: 1
-  stayActivated: 1
+  stayActivated: 0
   plateVisual: {fileID: 771146479}
   pressDistance: 0.02
   pressSpeed: 10
@@ -2216,7 +2225,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.28
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &803503013
 PrefabInstance:
@@ -2230,6 +2239,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: -4454588398344234699, guid: efb3399a3ff9ca04c843991ae4083446, type: 3}
+    - target: {fileID: 929602580012127753, guid: 36eff8b49ecdca745894efb1d2ce5f8f, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -6538903991835684241, guid: efb3399a3ff9ca04c843991ae4083446, type: 3}
     - target: {fileID: 929602580012127753, guid: 36eff8b49ecdca745894efb1d2ce5f8f, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
@@ -2783,7 +2796,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CurtainController
   height: 2
-  speed: 2
+  raiseSpeed: 2
+  lowerSpeed: 0.3
+  knobRaiseSpeed: 0.3
 --- !u!1 &1370928825
 GameObject:
   m_ObjectHideFlags: 0
@@ -3356,7 +3371,7 @@ MonoBehaviour:
   m_StartingSingleGrabTransformers: []
   m_StartingMultipleGrabTransformers: []
   m_AddDefaultGrabTransformers: 1
-  m_FarAttachMode: 1
+  m_FarAttachMode: 2
   m_LimitLinearVelocity: 0
   m_LimitAngularVelocity: 0
   m_MaxLinearVelocityDelta: 10
@@ -4235,13 +4250,16 @@ MonoBehaviour:
   progressFill: {fileID: 1700743734}
   indicator: {fileID: 1700743733}
   indicatorOffset: {x: 0, y: 0.5, z: 0}
+  onProgressChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onTargetReached:
+    m_PersistentCalls:
+      m_Calls: []
   onLock:
     m_PersistentCalls:
       m_Calls: []
   onUnlock:
-    m_PersistentCalls:
-      m_Calls: []
-  onTargetReached:
     m_PersistentCalls:
       m_Calls: []
 --- !u!64 &1823589748
@@ -4533,7 +4551,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
+  m_Radius: 0.28
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1926643313
 MonoBehaviour:
@@ -4709,13 +4727,16 @@ MonoBehaviour:
   progressFill: {fileID: 1370928827}
   indicator: {fileID: 1370928826}
   indicatorOffset: {x: 0, y: 0.5, z: 0}
+  onProgressChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onTargetReached:
+    m_PersistentCalls:
+      m_Calls: []
   onLock:
     m_PersistentCalls:
       m_Calls: []
   onUnlock:
-    m_PersistentCalls:
-      m_Calls: []
-  onTargetReached:
     m_PersistentCalls:
       m_Calls: []
 --- !u!64 &2123487900

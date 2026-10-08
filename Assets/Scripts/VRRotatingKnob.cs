@@ -23,12 +23,13 @@ public class VRRotatingKnob : XRBaseInteractable
     [Header("Indicateur")]
     [SerializeField] private Image progressFill;
     [SerializeField] private Transform indicator;
-    [SerializeField] private Vector3 indicatorOffset = new Vector3(0f, 0.3f, 0f);
+    [SerializeField] private Vector3 indicatorOffset = new Vector3(0f, 0.5f, 0f);
 
     [Header("Événements")]
+    [SerializeField] private UnityEvent<float> onProgressChanged;
+    [SerializeField] private UnityEvent onTargetReached;
     [SerializeField] private UnityEvent onLock;
     [SerializeField] private UnityEvent onUnlock;
-    [SerializeField] private UnityEvent onTargetReached;
 
     private float turned;
     private float lastHandAngle;
@@ -53,7 +54,7 @@ public class VRRotatingKnob : XRBaseInteractable
     {
         if (indicator == null)
             return;
-        
+
         Transform space = transform.parent;
         Vector3 localTarget = transform.localPosition + indicatorOffset;
 
@@ -89,7 +90,7 @@ public class VRRotatingKnob : XRBaseInteractable
                 lastHandAngle = handAngle;
             }
         }
-        else if (returnWhenReleased && !locked && !targetReached)
+        else if (returnWhenReleased && !locked)
         {
             SetTurned(Mathf.MoveTowards(turned, 0f, returnSpeed * Time.deltaTime));
         }
@@ -113,42 +114,48 @@ public class VRRotatingKnob : XRBaseInteractable
         }
 
         angle = Mathf.Atan2(v.z, v.y) * Mathf.Rad2Deg;
-        
+
         return useControllerTwist || new Vector2(v.y, v.z).magnitude > minHandRadius;
     }
 
     private void SetTurned(float value)
     {
+        float previous = turned;
         turned = Mathf.Clamp(value, 0f, targetAngle);
 
         float visual = reverseDirection ? -turned : turned;
         transform.localRotation = Quaternion.Euler(visual, 0f, 90f);
 
+        float progress = turned / targetAngle;
+
         if (progressFill != null)
-            progressFill.fillAmount = turned / targetAngle;
+            progressFill.fillAmount = progress;
+
+        if (!Mathf.Approximately(previous, turned))
+        {
+            if (curtain != null)
+                curtain.SetOpenAmount(progress);
+
+            onProgressChanged?.Invoke(progress);
+        }
 
         bool reached = turned >= targetAngle;
         if (reached && !targetReached)
-            OnTargetReached();
+        {
+            Debug.Log("Rouage tourné à fond");
+            onTargetReached?.Invoke();
+        }
         targetReached = reached;
-    }
-
-    private void OnTargetReached()
-    {
-        Debug.Log("Rouage tourné à fond");
-
-        if (curtain != null)
-            curtain.RaiseCurtain();
-        else
-            Debug.LogWarning("CurtainController non assigné au rouage");
-
-        onTargetReached?.Invoke();
     }
 
     public void Lock()
     {
         if (locked) return;
         locked = true;
+
+        if (curtain != null)
+            curtain.SetLocked(true);
+
         Debug.Log("Cog verrouillé à " + turned + "°");
         onLock?.Invoke();
     }
@@ -157,6 +164,10 @@ public class VRRotatingKnob : XRBaseInteractable
     {
         if (!locked) return;
         locked = false;
+
+        if (curtain != null)
+            curtain.SetLocked(false);
+
         Debug.Log("Cog déverrouillé");
         onUnlock?.Invoke();
     }

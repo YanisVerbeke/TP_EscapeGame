@@ -1,16 +1,21 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CurtainController : MonoBehaviour
 {
     [Header("Animation")]
     [SerializeField] private float height = 3f;
-
-    [SerializeField] private float speed = 2f;
+    [FormerlySerializedAs("speed")]
+    [SerializeField] private float raiseSpeed = 2f;
+    [SerializeField] private float lowerSpeed = 0.3f;
+    [SerializeField] private float knobRaiseSpeed = 0.3f;
 
     private Vector3 closedPosition;
     private Vector3 openPosition;
 
-    private bool isRaising;
+    private float targetAmount;
+    private bool followingKnob;
+    private bool locked;
 
     private void Start()
     {
@@ -22,21 +27,39 @@ public class CurtainController : MonoBehaviour
 
     private void Update()
     {
-        if (!isRaising)
+        if (locked)
             return;
 
-        transform.localPosition = Vector3.MoveTowards(transform.localPosition, openPosition, speed * Time.deltaTime);
+        Vector3 target = Vector3.Lerp(closedPosition, openPosition, targetAmount);
 
-        if (transform.localPosition == openPosition)
-        {
-            isRaising = false;
-        }
+        bool goingUp = target.y > transform.localPosition.y;
+        float currentSpeed = goingUp ? (followingKnob ? knobRaiseSpeed : raiseSpeed) : lowerSpeed;
+
+        transform.localPosition = Vector3.MoveTowards(transform.localPosition, target, currentSpeed * Time.deltaTime);
     }
 
     public void RaiseCurtain()
     {
         Debug.Log("Le rideau monte");
+        followingKnob = false;
+        targetAmount = 1f;
+    }
 
-        isRaising = true;
+    public void LowerCurtain()
+    {
+        Debug.Log("Le rideau descend");
+        followingKnob = false;
+        targetAmount = 0f;
+    }
+
+    public void SetOpenAmount(float amount)
+    {
+        followingKnob = true;
+        targetAmount = Mathf.Clamp01(amount);
+    }
+
+    public void SetLocked(bool value)
+    {
+        locked = value;
     }
 }
