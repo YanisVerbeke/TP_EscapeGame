@@ -3,7 +3,7 @@ using UnityEngine;
 public class ConveyorMovement : MonoBehaviour
 {
     private Rigidbody _movableRigidbody;
-    private float _speed = 1.6f;
+    private float _speed = 2f;
 
     private void Awake()
     {
