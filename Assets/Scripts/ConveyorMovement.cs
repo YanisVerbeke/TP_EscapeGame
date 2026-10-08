@@ -1,9 +1,9 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ConveyorMovement : MonoBehaviour
 {
     private Rigidbody _movableRigidbody;
+    private float _speed = 1.6f;
 
     private void Awake()
     {
@@ -14,7 +14,7 @@ public class ConveyorMovement : MonoBehaviour
     {
         // Ça n'a AUCUN sens je déteste mais c'est ce qui marche le mieux ??? aled
         Vector3 initPos = _movableRigidbody.position;
-        _movableRigidbody.position += 2f * Time.fixedDeltaTime * -transform.forward;
+        _movableRigidbody.position += _speed * Time.fixedDeltaTime * -transform.forward;
         _movableRigidbody.MovePosition(initPos);
     }
 }
