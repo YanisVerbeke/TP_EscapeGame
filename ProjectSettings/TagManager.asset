@@ -10,6 +10,7 @@ TagManager:
   - MiniWorldCamera
   - Water
   - CorrectObject
+  - Throwable
   layers:
   - Default
   - TransparentFX
