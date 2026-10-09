@@ -10,6 +10,9 @@ public class CurtainController : MonoBehaviour
     [SerializeField] private float lowerSpeed = 0.3f;
     [SerializeField] private float knobRaiseSpeed = 0.3f;
 
+    [Header("Salle suivante")]
+    [SerializeField] private GameObject[] zonesSalleSuivante;
+
     private Vector3 closedPosition;
     private Vector3 openPosition;
 
@@ -23,6 +26,8 @@ public class CurtainController : MonoBehaviour
 
         openPosition = closedPosition;
         openPosition.y += height;
+
+        ActiverZones(false);
     }
 
     private void Update()
@@ -43,6 +48,7 @@ public class CurtainController : MonoBehaviour
         Debug.Log("Le rideau monte");
         followingKnob = false;
         targetAmount = 1f;
+        ActiverZones(true);
     }
 
     public void LowerCurtain()
@@ -50,6 +56,7 @@ public class CurtainController : MonoBehaviour
         Debug.Log("Le rideau descend");
         followingKnob = false;
         targetAmount = 0f;
+        ActiverZones(false);
     }
 
     public void SetOpenAmount(float amount)
@@ -61,5 +68,11 @@ public class CurtainController : MonoBehaviour
     public void SetLocked(bool value)
     {
         locked = value;
+    }
+
+    private void ActiverZones(bool etat)
+    {
+        foreach (var z in zonesSalleSuivante)
+            if (z != null) z.SetActive(etat);
     }
 }
