@@ -2526,6 +2526,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button
       objectReference: {fileID: 0}
+    - target: {fileID: 2043066480405472099, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
+      propertyPath: m_Interactable
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2146999814533267095, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -2602,7 +2606,8 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 2662549935184507665, guid: 5f444490a406623428dfbc15dd40a4a1, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
