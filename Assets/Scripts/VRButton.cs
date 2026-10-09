@@ -6,6 +6,7 @@ public class VRButton : XRBaseInteractable
 {
     [Header("Action")]
     [SerializeField] private CurtainController curtain;
+    [SerializeField] private bool toggle = true;
 
     [Header("Animation du bouton")]
     [SerializeField] private Transform buttonVisual;
@@ -22,6 +23,7 @@ public class VRButton : XRBaseInteractable
     private Vector3 startPosition;
     private Vector3 pressedPosition;
     private bool isPressed;
+    private bool curtainOpen;
     private float lastTriggerTime = -999f;
     private float visualPressedUntil;
 
@@ -91,7 +93,7 @@ public class VRButton : XRBaseInteractable
 
         if (requiredTag != "" && !other.CompareTag(requiredTag))
             return;
-        
+
         XRGrabInteractable grab = other.GetComponentInParent<XRGrabInteractable>();
         if (grab != null && grab.isSelected)
             return;
@@ -105,10 +107,22 @@ public class VRButton : XRBaseInteractable
 
     private void TriggerAction()
     {
-        if (curtain != null)
-            curtain.RaiseCurtain();
-        else
+        if (curtain == null)
+        {
             Debug.LogWarning("CurtainController non assigné au bouton");
+            return;
+        }
+
+        if (toggle && curtainOpen)
+        {
+            curtain.LowerCurtain();
+            curtainOpen = false;
+        }
+        else
+        {
+            curtain.RaiseCurtain();
+            curtainOpen = true;
+        }
     }
 
     public override void ProcessInteractable(XRInteractionUpdateOrder.UpdatePhase updatePhase)
