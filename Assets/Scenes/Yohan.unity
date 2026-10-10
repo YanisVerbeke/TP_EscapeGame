@@ -20762,7 +20762,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6f7f348c1dc372f48bc5fb8107bfb504, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6f7f348c1dc372f48bc5fb8107bfb504, type: 3}
       propertyPath: m_LocalRotation.x
@@ -20774,7 +20774,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6f7f348c1dc372f48bc5fb8107bfb504, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6f7f348c1dc372f48bc5fb8107bfb504, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -20786,7 +20786,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6f7f348c1dc372f48bc5fb8107bfb504, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 180
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6f7f348c1dc372f48bc5fb8107bfb504, type: 3}
       propertyPath: m_Name
@@ -20825,7 +20825,7 @@ MonoBehaviour:
   rotationAxis: {x: 0, y: 0, z: 1}
   steps: 4
   turnSpeed: 180
-  correctStep: 2
+  correctStep: 3
   groupId: Turnable
   curtain: {fileID: 0}
   onSolved:
