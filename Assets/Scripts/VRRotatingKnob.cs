@@ -36,10 +36,13 @@ public class VRRotatingKnob : XRBaseInteractable
     private bool locked;
     private bool targetReached;
     private Quaternion indicatorRotation;
+    private Vector3 startEuler;
 
     protected override void Awake()
     {
         base.Awake();
+
+        startEuler = transform.localEulerAngles;
 
         if (indicator != null)
             indicatorRotation = indicator.rotation;
@@ -124,7 +127,7 @@ public class VRRotatingKnob : XRBaseInteractable
         turned = Mathf.Clamp(value, 0f, targetAngle);
 
         float visual = reverseDirection ? -turned : turned;
-        transform.localRotation = Quaternion.Euler(visual, 0f, 90f);
+        transform.localRotation = Quaternion.Euler(startEuler.x + visual, startEuler.y, startEuler.z);
 
         float progress = turned / targetAngle;
 
