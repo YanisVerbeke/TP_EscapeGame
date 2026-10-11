@@ -32694,7 +32694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PuzzleLeviers
   nombreLeviers: 4
-  leviersRequis: 010000000200000003000000
+  leviersRequis: 000000000200000003000000
   exigerLesAutresEteints: 1
   onResolu:
     m_PersistentCalls:
